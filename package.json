@@ -1,5 +1,5 @@
 {
-  "name": "goit-node",
+  "name": "language-app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MargoBil/goit-node.js.git"
+    "url": "git+https://github.com/MargoBil/MyFavoriteLanguage-App-BackEnd.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MargoBil/goit-node.js/issues"
+    "url": "https://github.com/MargoBil/MyFavoriteLanguage-App-BackEnd.js/issues"
   },
-  "homepage": "https://github.com/MargoBil/goit-node.js#readme",
+  "homepage": "https://github.com/MargoBil/MyFavoriteLanguage-App-BackEnd.js#readme",
   "devDependencies": {
     "nodemon": "^2.0.7"
   },
