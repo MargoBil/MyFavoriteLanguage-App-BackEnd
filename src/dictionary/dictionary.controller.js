@@ -31,16 +31,6 @@ class DictionaryController {
           return res.status(200).json(data);
         });
       }
-      if (Object.keys(req.query)[0] === "Sub") {
-        const query = Object.values(req.query)[0];
-        return wordModel.find({ subscription: query }, (err, result) => {
-          if (err) {
-            return console.log(err);
-          }
-          data = result;
-          return res.status(200).json(data);
-        });
-      }
 
       data = await dictionaryList();
       if (!data) {
@@ -54,7 +44,7 @@ class DictionaryController {
 
   async findWordById(req, res, next) {
     try {
-      const id = ObjectId(req.params.contactId);
+      const id = ObjectId(req.params.wordId);
       const data = await getWordById(id);
       if (!data) {
         return res.status(404).json({ message: "Not Found" });
@@ -76,7 +66,7 @@ class DictionaryController {
 
   async deleteWordById(req, res, next) {
     try {
-      const id = ObjectId(req.params.contactId);
+      const id = ObjectId(req.params.wordId);
       const data = await removeWord(id);
       if (!data) {
         return res.status(404).json({ message: "Not Found" });
@@ -89,7 +79,7 @@ class DictionaryController {
 
   async updateWordById(req, res, next) {
     try {
-      const id = ObjectId(req.params.contactId);
+      const id = ObjectId(req.params.wordId);
       const data = await updateWord({ _id: id }, req.body);
       if (!data) {
         return res.status(404).json({ message: "Not Found" });
@@ -101,9 +91,9 @@ class DictionaryController {
   }
 
   validateId(req, res, next) {
-    const { contactId } = req.params;
+    const { wordId } = req.params;
 
-    if (!ObjectId.isValid(contactId)) {
+    if (!ObjectId.isValid(wordId)) {
       return res.status(400).send("This  id does not exist");
     }
 
@@ -127,12 +117,11 @@ class DictionaryController {
 
   validatePatchNewWord(req, res, next) {
     const patchDictionaryRules = Joi.object({
-      name: Joi.string(),
-      email: Joi.string(),
-      phone: Joi.string(),
-      subscription: Joi.string(),
-      password: Joi.string(),
-      token: Joi.string().allow(""),
+      language: Joi.string().required(),
+      word: Joi.array().required(),
+      translateLanguage: Joi.string().required(),
+      translateWord: Joi.array().required(),
+      token: Joi.string().required(),
     });
     const validResult = patchDictionaryRules.validate(req.body);
     const isResultEmpty = Object.keys(validResult.value).length === 0;

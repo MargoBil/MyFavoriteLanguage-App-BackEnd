@@ -1,4 +1,4 @@
-const wordModel = require('./dictionary.model');
+const wordModel = require("./dictionary.model");
 
 async function dictionaryList() {
   try {
@@ -28,7 +28,7 @@ async function removeWord(wordId) {
 }
 
 async function addWord(bodyChunk) {
-    console.log(bodyChunk);
+  console.log(bodyChunk);
   try {
     const newWord = await wordModel.create(bodyChunk);
     return newWord;
@@ -39,7 +39,11 @@ async function addWord(bodyChunk) {
 
 async function updateWord(wordId, bodyChunk) {
   try {
-    const udatedWord = await wordModel.findOneAndUpdate(wordId, {$set: bodyChunk}, {new: true});
+    const udatedWord = await wordModel.findOneAndUpdate(
+      wordId,
+      { $set: bodyChunk },
+      { new: true }
+    );
     return udatedWord;
   } catch (error) {
     console.log(error);

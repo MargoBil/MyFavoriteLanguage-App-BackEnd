@@ -1,5 +1,14 @@
-const {Router} = require('express');
-const {getWords, findWordById, postWord, deleteWordById, updateWordById, validateId, validatePostNewWord, validatePatchNewWord, } = require('./dictionary.controller');
+const { Router } = require("express");
+const {
+  getWords,
+  findWordById,
+  postWord,
+  deleteWordById,
+  updateWordById,
+  validateId,
+  validatePostNewWord,
+  validatePatchNewWord,
+} = require("./dictionary.controller");
 
 const dictionaryRouter = Router();
 
@@ -13,7 +22,12 @@ dictionaryRouter.post("/", validatePostNewWord, postWord);
 dictionaryRouter.get("/:wordId", validateId, findWordById);
 
 //update word by id:
-dictionaryRouter.patch("/:wordId", validateId, validatePatchNewWord, updateWordById);
+dictionaryRouter.patch(
+  "/:wordId",
+  validateId,
+  validatePatchNewWord,
+  updateWordById
+);
 
 //delete word by id:
 dictionaryRouter.delete("/:wordId", validateId, deleteWordById);
