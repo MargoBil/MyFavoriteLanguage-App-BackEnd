@@ -41,8 +41,8 @@ module.exports = class Server {
   }
 
   startListening() {
-    this.server.listen(process.env.PORT || 3000, () => {
-      console.log('Server started listening on port', process.env.PORT || 3000);
+    this.server.listen(process.env.port || 3000, () => {
+      console.log('Server started listening on port', process.env.port || 3000);
     });
   }
   async initDataBase() {
