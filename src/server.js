@@ -6,7 +6,6 @@ const authRouter = require('./users/auth.routers');
 const usersRouter = require('./users/user.routers');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const PORT = process.env.PORT || 3000;
 
 module.exports = class Server {
   constructor() {
@@ -42,8 +41,8 @@ module.exports = class Server {
   }
 
   startListening() {
-    this.server.listen(PORT, () => {
-      console.log('Server started listening on port', PORT);
+    this.server.listen(process.env.PORT || 3000, () => {
+      console.log('Server started listening on port', process.env.PORT || 3000);
     });
   }
   async initDataBase() {
