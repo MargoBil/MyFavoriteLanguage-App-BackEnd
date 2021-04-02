@@ -30,8 +30,7 @@ const {
         }
         const {email, _id} = newUser;
         res.status(201).json({
-          _id,
-          email,
+          message: 'You have been registered successfully!',
         });
       } catch (error) {
         next(error);
