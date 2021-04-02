@@ -28,7 +28,7 @@ module.exports = class Server {
     this.server.use(express.json());
     this.server.use(
       cors({
-        origin: 'https://localhost:3000',
+        origin: 'https://localhost:4200',
       }),
     );
     this.server.use(morgan('dev'));
