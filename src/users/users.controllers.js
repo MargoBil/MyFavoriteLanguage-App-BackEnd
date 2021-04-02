@@ -77,7 +77,7 @@ const {
   
     validateReqBodyForAuth(req, res, next) {
       const validateRules = Joi.object({
-        name: Joi.string().required(),
+        name: Joi.string(),
         email: Joi.string().required(),
         password: Joi.string().required(),
       });
