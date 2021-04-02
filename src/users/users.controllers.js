@@ -28,7 +28,6 @@ const {
             message: 'Email in use',
           });
         }
-        const {email, _id} = newUser;
         res.status(201).json({
           message: 'You have been registered successfully!',
         });

@@ -51,12 +51,11 @@ async function createNewToken(user) {
 }
 
 async function updateToken(user, token) {
-  const {_id, email} = user;
+  const {_id} = user;
   try {
     await userModel.findByIdAndUpdate({_id}, {token});
     return {
-      token,
-      user: {email},
+      token
     };
   } catch (error) {
     console.log(error);
