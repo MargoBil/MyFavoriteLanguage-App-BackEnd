@@ -67,8 +67,8 @@ const {
     async getCurrentUser(req, res, next) {
       try {
         const currentUser = req.user;
-        const {email, subscription} = currentUser;
-        return res.json({email, subscription});
+        const {name} = currentUser;
+        return res.json({name});
       } catch (error) {
         next(error);
       }
