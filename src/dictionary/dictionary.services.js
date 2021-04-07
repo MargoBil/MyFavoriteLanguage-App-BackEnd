@@ -36,7 +36,6 @@ async function removeWord(wordId) {
 }
 
 async function addWord(bodyChunk) {
-  console.log(bodyChunk);
   try {
     const newWord = await wordModel.create(bodyChunk);
     return newWord;
@@ -47,12 +46,12 @@ async function addWord(bodyChunk) {
 
 async function updateWord(wordId, bodyChunk) {
   try {
-    const udatedWord = await wordModel.findOneAndUpdate(
+    const updatedWord = await wordModel.findOneAndUpdate(
       wordId,
       { $set: bodyChunk },
       { new: true }
     );
-    return udatedWord;
+    return updatedWord;
   } catch (error) {
     console.log(error);
   }

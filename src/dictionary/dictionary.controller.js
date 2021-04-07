@@ -18,7 +18,9 @@ class DictionaryController {
     try {
       const { page, limit } = req.query;
       const options = { page: page, limit: limit };
+      const dataLength = await wordModel.find();
       let data;
+
       if (
         Object.keys(req.query)[0] === "page" &&
         Object.keys(req.query)[1] === "limit"
@@ -27,12 +29,13 @@ class DictionaryController {
           if (err) {
             return console.log(err);
           }
-          data = result.docs;
+          data = {total: dataLength.length, data: result.docs};
           return res.status(200).json(data);
         });
       }
 
-      data = await dictionaryList();
+      data = {total: dataLength.length, data: await dictionaryList()}
+
       if (!data) {
         return res.status(404).json({ message: "Not Found" });
       }
