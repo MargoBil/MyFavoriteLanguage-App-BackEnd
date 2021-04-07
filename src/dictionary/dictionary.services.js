@@ -3,7 +3,15 @@ const wordModel = require("./dictionary.model");
 async function dictionaryList() {
   try {
     const wordsList = await wordModel.find();
-    return wordsList;
+    const filteredList = wordsList.map((item) => {
+      return {
+        language,
+        word,
+        translateLanguage,
+        translateWord,
+      };
+    });
+    return filteredList;
   } catch (error) {
     console.log(error);
   }
