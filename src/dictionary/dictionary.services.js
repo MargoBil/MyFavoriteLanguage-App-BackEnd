@@ -5,10 +5,10 @@ async function dictionaryList() {
     const wordsList = await wordModel.find();
     const filteredList = wordsList.map((item) => {
       return {
-        language,
-        word,
-        translateLanguage,
-        translateWord,
+        language: item.language,
+        word: item.word,
+        translateLanguage: item.translateLanguage,
+        translateWord: item.translateWord,
       };
     });
     return filteredList;
