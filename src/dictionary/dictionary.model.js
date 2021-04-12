@@ -7,7 +7,6 @@ const wordSchema = new Schema({
   word: { type: Array, required: true },
   translateLanguage: { type: String, required: true },
   translateWord: { type: Array, required: true },
-  token: { type: String, required: false },
 });
 
 wordSchema.plugin(mongoosePaginate);
