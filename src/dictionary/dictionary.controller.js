@@ -109,7 +109,6 @@ class DictionaryController {
       word: Joi.array().required(),
       translateLanguage: Joi.string().required(),
       translateWord: Joi.array().required(),
-      token: Joi.string().required(),
     });
     const validResult = postDictionaryRules.validate(req.body);
     if (validResult.error) {
@@ -124,7 +123,6 @@ class DictionaryController {
       word: Joi.array().required(),
       translateLanguage: Joi.string().required(),
       translateWord: Joi.array().required(),
-      token: Joi.string().required(),
     });
     const validResult = patchDictionaryRules.validate(req.body);
     const isResultEmpty = Object.keys(validResult.value).length === 0;
