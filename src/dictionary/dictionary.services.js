@@ -3,6 +3,7 @@ const wordModel = require("./dictionary.model");
 async function dictionaryList() {
   try {
     const wordsList = await wordModel.find();
+    console.log(wordsList);
     const filteredList = wordsList.map((item) => {
       return {
         language: item.language,
@@ -37,7 +38,7 @@ async function removeWord(wordId) {
 
 async function addWord(bodyChunk) {
   try {
-    const newWord = await wordModel.create({...bodyChunk, data: new Date()});
+    const newWord = await wordModel.create({...bodyChunk, data: Date.now()});
     return newWord;
   } catch (error) {
     console.log(error);

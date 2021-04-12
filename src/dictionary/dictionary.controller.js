@@ -29,14 +29,13 @@ class DictionaryController {
           if (err) {
             return console.log(err);
           }
-          data = {total: dataLength.length, data: result.docs};
+          data = { total: dataLength.length, data: result.docs };
           return res.status(200).json(data);
         });
       }
 
       const responseData = await dictionaryList();
-      console.log(responseData);
-      data = {total: dataLength.length, data: responseData}
+      data = { total: dataLength.length, data: responseData };
 
       if (!data) {
         return res.status(404).json({ message: "Not Found" });
