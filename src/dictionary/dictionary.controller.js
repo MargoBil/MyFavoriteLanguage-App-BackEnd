@@ -34,7 +34,9 @@ class DictionaryController {
         });
       }
 
-      data = {total: dataLength.length, data: await dictionaryList()}
+      const responseData = await dictionaryList();
+      console.log(responseData);
+      data = {total: dataLength.length, data: responseData}
 
       if (!data) {
         return res.status(404).json({ message: "Not Found" });

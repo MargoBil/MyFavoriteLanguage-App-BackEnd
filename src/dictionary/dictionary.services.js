@@ -37,7 +37,7 @@ async function removeWord(wordId) {
 
 async function addWord(bodyChunk) {
   try {
-    const newWord = await wordModel.create(bodyChunk);
+    const newWord = await wordModel.create({...bodyChunk, data: new Date()});
     return newWord;
   } catch (error) {
     console.log(error);
