@@ -12,7 +12,7 @@ async function dictionaryList() {
         data: Date.parse(item.data),
       };
     });
-    return filteredList.sort();
+    return filteredList.sort((a, b)=> b.data - a.data);
   } catch (error) {
     console.log(error);
   }
