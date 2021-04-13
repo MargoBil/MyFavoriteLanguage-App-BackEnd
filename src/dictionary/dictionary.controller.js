@@ -1,6 +1,7 @@
 const Joi = require("joi");
 const wordModel = require("./dictionary.model");
 const userModel = require("../users/users.model");
+const jwt = require('jsonwebtoken');
 
 const {
   Types: { ObjectId },
@@ -19,14 +20,14 @@ class DictionaryController {
     try {
       const { page, limit } = req.query;
       const options = { page: page, limit: limit };
-      const dataLength = await wordModel.find({token: req.token});
+      const dataLength = await wordModel.find({userId: req.userId});
       let data;
 
       if (
         Object.keys(req.query)[0] === "page" &&
         Object.keys(req.query)[1] === "limit"
       ) {
-        return wordModel.paginate({token: req.token}, options, (err, result) => {
+        return wordModel.paginate({userId: req.userId}, options, (err, result) => {
           if (err) {
             return console.log(err);
           }
@@ -35,7 +36,7 @@ class DictionaryController {
         });
       }
 
-      const responseData = await dictionaryList(req.token);
+      const responseData = await dictionaryList(req.userId);
       data = { total: dataLength.length, data: responseData };
 
       if (!data) {
@@ -63,7 +64,7 @@ class DictionaryController {
 
   async postWord(req, res, next) {
     try {
-      const data = await addWord(req.body, req.token);
+      const data = await addWord(req.body, req.userId);
       return res.status(201).json(data);
     } catch (error) {
       next(error);
@@ -139,15 +140,17 @@ class DictionaryController {
     try {
       const authorizationHeader = req.get("Authorization") || "";
       const token = authorizationHeader.replace("Bearer ", "");
+      let userId;
       try {
-        const result = await userModel.findOne({ token });
-        if (!result) {
+        userId = await jwt.verify(token, process.env.TOKEN_SECRET)._id;
+        const isUserExist = await userModel.find({token: req.token});
+        if (!isUserExist) {
           return res.status(401).json({ message: "Not authorized" });
         }
       } catch (err) {
-        next(err);
+        return res.status(401).json({ message: "Not authorized" });
       }
-      req.token = token;
+      req.userId = userId;
       next();
     } catch (err) {
       next(err);

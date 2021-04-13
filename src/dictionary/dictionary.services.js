@@ -1,8 +1,8 @@
 const wordModel = require("./dictionary.model");
 
-async function dictionaryList(token) {
+async function dictionaryList(userId) {
   try {
-    const wordsList = await wordModel.find({ token });
+    const wordsList = await wordModel.find({ userId });
     const filteredList = wordsList.map((item) => {
       return {
         language: item.language,
@@ -36,12 +36,12 @@ async function removeWord(wordId) {
   }
 }
 
-async function addWord(bodyChunk, token) {
+async function addWord(bodyChunk, userId) {
   try {
     const newWord = await wordModel.create({
       ...bodyChunk,
       data: Date.now(),
-      token: token,
+      userId: userId,
     });
     const response = {
       language: newWord.language,
