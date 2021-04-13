@@ -28,8 +28,12 @@ async function getWordById(wordId) {
 }
 
 async function getWordByName(userId, word) {
+  let response;
   try {
-    const response = await wordModel.find({userId, word}, {userId: 0});
+    response = [
+      ...(await wordModel.find({ userId, word }, { userId: 0 })),
+      ...(await wordModel.find({ userId, translateWord: word }, { userId: 0 })),
+    ];
     return response;
   } catch (error) {
     console.log(error);
