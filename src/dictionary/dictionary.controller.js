@@ -1,5 +1,6 @@
 const Joi = require("joi");
 const wordModel = require("./dictionary.model");
+const userModel = require("../users/users.model");
 
 const {
   Types: { ObjectId },
@@ -18,7 +19,7 @@ class DictionaryController {
     try {
       const { page, limit } = req.query;
       const options = { page: page, limit: limit };
-      const dataLength = await wordModel.find();
+      const dataLength = await wordModel.find({token: req.token});
       let data;
 
       if (
@@ -34,12 +35,13 @@ class DictionaryController {
         });
       }
 
-      const responseData = await dictionaryList();
+      const responseData = await dictionaryList(req.token);
       data = { total: dataLength.length, data: responseData };
 
       if (!data) {
         return res.status(404).json({ message: "Not Found" });
       }
+
       return res.status(200).json(data);
     } catch (error) {
       next(error);
@@ -61,7 +63,7 @@ class DictionaryController {
 
   async postWord(req, res, next) {
     try {
-      const data = await addWord(req.body);
+      const data = await addWord(req.body, req.token);
       return res.status(201).json(data);
     } catch (error) {
       next(error);
@@ -131,6 +133,25 @@ class DictionaryController {
       return res.status(400).json({ message: "missing fields" });
     }
     next();
+  }
+
+  async authorize(req, res, next) {
+    try {
+      const authorizationHeader = req.get("Authorization") || "";
+      const token = authorizationHeader.replace("Bearer ", "");
+      try {
+        const result = await userModel.findOne({ token });
+        if (!result) {
+          return res.status(401).json({ message: "Not authorized" });
+        }
+      } catch (err) {
+        next(err);
+      }
+      req.token = token;
+      next();
+    } catch (err) {
+      next(err);
+    }
   }
 }
 

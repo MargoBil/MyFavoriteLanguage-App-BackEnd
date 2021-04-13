@@ -8,28 +8,30 @@ const {
   validateId,
   validatePostNewWord,
   validatePatchNewWord,
+  authorize
 } = require("./dictionary.controller");
 
 const dictionaryRouter = Router();
 
 //get all words:
-dictionaryRouter.get("/", getWords);
+dictionaryRouter.get("/", authorize, getWords);
 
 //post word:
-dictionaryRouter.post("/", validatePostNewWord, postWord);
+dictionaryRouter.post("/", authorize, validatePostNewWord, postWord);
 
 //get word by id:
-dictionaryRouter.get("/:wordId", validateId, findWordById);
+dictionaryRouter.get("/:wordId", authorize, validateId, findWordById);
 
 //update word by id:
 dictionaryRouter.patch(
   "/:wordId",
+  authorize,
   validateId,
   validatePatchNewWord,
   updateWordById
 );
 
 //delete word by id:
-dictionaryRouter.delete("/:wordId", validateId, deleteWordById);
+dictionaryRouter.delete("/:wordId", authorize, validateId, deleteWordById);
 
 module.exports = dictionaryRouter;

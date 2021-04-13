@@ -1,8 +1,8 @@
 const wordModel = require("./dictionary.model");
 
-async function dictionaryList() {
+async function dictionaryList(token) {
   try {
-    const wordsList = await wordModel.find();
+    const wordsList = await wordModel.find({ token });
     const filteredList = wordsList.map((item) => {
       return {
         language: item.language,
@@ -12,7 +12,7 @@ async function dictionaryList() {
         data: Date.parse(item.data),
       };
     });
-    return filteredList.sort((a, b)=> b.data - a.data);
+    return filteredList.sort((a, b) => b.data - a.data);
   } catch (error) {
     console.log(error);
   }
@@ -36,10 +36,21 @@ async function removeWord(wordId) {
   }
 }
 
-async function addWord(bodyChunk) {
+async function addWord(bodyChunk, token) {
   try {
-    const newWord = await wordModel.create({ ...bodyChunk, data: Date.now() });
-    return newWord;
+    const newWord = await wordModel.create({
+      ...bodyChunk,
+      data: Date.now(),
+      token: token,
+    });
+    const response = {
+      language: newWord.language,
+      translateLanguage: newWord.translateLanguage,
+      word: newWord.word,
+      translateWord: newWord.translateWord,
+      data: newWord.data,
+    };
+    return response;
   } catch (error) {
     console.log(error);
   }
