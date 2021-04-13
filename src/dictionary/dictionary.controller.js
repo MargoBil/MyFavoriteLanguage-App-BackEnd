@@ -26,7 +26,7 @@ class DictionaryController {
         Object.keys(req.query)[0] === "page" &&
         Object.keys(req.query)[1] === "limit"
       ) {
-        return wordModel.paginate({}, options, (err, result) => {
+        return wordModel.paginate({token: req.token}, options, (err, result) => {
           if (err) {
             return console.log(err);
           }
