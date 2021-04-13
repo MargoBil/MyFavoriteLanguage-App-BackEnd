@@ -20,8 +20,17 @@ async function dictionaryList(userId) {
 
 async function getWordById(wordId) {
   try {
-    const contact = await wordModel.findOne(wordId);
-    return contact;
+    const word = await wordModel.findOne(wordId);
+    return word;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getWordByName(userId, word) {
+  try {
+    const response = await wordModel.find({userId, word}, {userId: 0});
+    return response;
   } catch (error) {
     console.log(error);
   }
@@ -75,4 +84,5 @@ module.exports = {
   removeWord,
   addWord,
   updateWord,
+  getWordByName,
 };

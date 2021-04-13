@@ -2,6 +2,7 @@ const { Router } = require("express");
 const {
   getWords,
   findWordById,
+  findWordByName,
   postWord,
   deleteWordById,
   updateWordById,
@@ -22,13 +23,16 @@ dictionaryRouter.post("/", authorize, validatePostNewWord, postWord);
 //get word by id:
 dictionaryRouter.get("/:wordId", authorize, validateId, findWordById);
 
+//get word by name:
+dictionaryRouter.get("/search/:wordName", authorize, findWordByName);
+
 //update word by id:
 dictionaryRouter.patch(
   "/:wordId",
   authorize,
   validateId,
   validatePatchNewWord,
-  updateWordById
+  updateWordById,
 );
 
 //delete word by id:

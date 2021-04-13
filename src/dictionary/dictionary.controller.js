@@ -9,6 +9,7 @@ const {
 const {
   dictionaryList,
   getWordById,
+  getWordByName,
   removeWord,
   addWord,
   updateWord,
@@ -53,6 +54,21 @@ class DictionaryController {
     try {
       const id = ObjectId(req.params.wordId);
       const data = await getWordById(id);
+      if (!data) {
+        return res.status(404).json({ message: "Not Found" });
+      }
+      return res.status(200).json(data);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async findWordByName(req, res, next) {
+    console.log(req.userId);
+    try {
+      const word = req.params.wordName;
+      const data = await getWordByName(req.userId, word);
+      console.log(data);
       if (!data) {
         return res.status(404).json({ message: "Not Found" });
       }
