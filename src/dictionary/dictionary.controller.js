@@ -20,7 +20,7 @@ class DictionaryController {
   async getWords(req, res, next) {
     try {
       const { page, limit } = req.query;
-      const options = { page: page, limit: limit };
+      const options = { page: page, limit: limit, sort: {data: -1}};
       const dataLength = await wordModel.find({userId: req.userId});
       let data;
 
