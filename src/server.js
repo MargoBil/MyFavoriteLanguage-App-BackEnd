@@ -30,6 +30,8 @@ module.exports = class Server {
 
   initMiddlewares() {
     this.server.use(express.json());
+    this.server.use(express.urlencoded());
+
     const corsOptions = {
       origin: function (origin, callback) {
         if (whiteList.indexOf(origin) !== -1) {
@@ -39,6 +41,7 @@ module.exports = class Server {
         }
       },
     };
+    
     this.server.use(cors(corsOptions));
   }
 
