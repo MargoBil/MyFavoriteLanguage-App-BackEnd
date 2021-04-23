@@ -6,10 +6,6 @@ const authRouter = require('./users/auth.routers');
 const usersRouter = require('./users/user.routers');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const whitelist = [
-  'http://localhost:4200',
-  'https://my-favorite-language.herokuapp.com/',
-];
 
 module.exports = class Server {
   constructor() {
@@ -30,19 +26,12 @@ module.exports = class Server {
 
   initMiddlewares() {
     this.server.use(express.json());
-    this.server.use(express.urlencoded());
-
-    const corsOptions = {
-      origin: function (origin, callback) {
-        if (whiteList.indexOf(origin) !== -1) {
-          callback(null, true);
-        } else {
-          callback(new Error('Not allowed by CORS'));
-        }
-      },
-    };
-    
-    this.server.use(cors(corsOptions));
+    this.server.use(
+      cors({
+        origin: 'http://localhost:4200',
+      }),
+    );
+    this.server.use(morgan('dev'));
   }
 
   initRoutes() {
