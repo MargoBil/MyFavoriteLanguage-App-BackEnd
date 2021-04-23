@@ -1,11 +1,11 @@
-const express = require('express');
-const cors = require('cors');
-require('dotenv').config();
-const dictionaryRouters = require('./dictionary/dictionary.routers');
-const authRouter = require('./users/auth.routers');
-const usersRouter = require('./users/user.routers');
-const morgan = require('morgan');
-const mongoose = require('mongoose');
+const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
+const dictionaryRouters = require("./dictionary/dictionary.routers");
+const authRouter = require("./users/auth.routers");
+const usersRouter = require("./users/user.routers");
+const morgan = require("morgan");
+const mongoose = require("mongoose");
 
 module.exports = class Server {
   constructor() {
@@ -28,28 +28,36 @@ module.exports = class Server {
     this.server.use(express.json());
     this.server.use(
       cors({
-        origin: 'http://localhost:4200',
-      }),
+        origin: [
+          "http://localhost:4200",
+          "https://my-favorite-language.herokuapp.com",
+        ],
+      })
     );
-    this.server.use(morgan('dev'));
+    this.server.use(morgan("dev"));
   }
 
   initRoutes() {
-    this.server.use('/dictionary', dictionaryRouters);
-    this.server.use('/auth', authRouter);
-    this.server.use('/users', usersRouter);
+    this.server.use("/dictionary", dictionaryRouters);
+    this.server.use("/auth", authRouter);
+    this.server.use("/users", usersRouter);
   }
 
   startListening() {
     this.server.listen(process.env.PORT || 3000, () => {
-      console.log('Server started listening on port', process.env.PORT || 3000);
+      console.log("Server started listening on port", process.env.PORT || 3000);
     });
   }
   async initDataBase() {
     try {
-      const {MONGODB_URL} = process.env;
-      await mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false});
-      console.log('Database connection successful');
+      const { MONGODB_URL } = process.env;
+      await mongoose.connect(MONGODB_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: false,
+      });
+      console.log("Database connection successful");
     } catch (error) {
       console.log(error);
       process.exit(1);
