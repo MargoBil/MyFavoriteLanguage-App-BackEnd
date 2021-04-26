@@ -30,7 +30,7 @@ module.exports = class Server {
       cors({
         origin: [
           "http://localhost:4200",
-          "https://my-favorite-language.herokuapp.com",
+          "https://my-favorite-language-app.netlify.app",
         ],
       })
     );
